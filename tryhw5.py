@@ -23,7 +23,7 @@ rate = .01
 momentum = .9
 decay = .0
 
-m = softmax_model(train.X.cols, train.y.cols)
+m = neural_net(train.X.cols, train.y.cols)
 train_model(m, train, batch, iters, rate, momentum, decay)
 print("done")
 print

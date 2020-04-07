@@ -48,7 +48,7 @@ void gradient_matrix(matrix m, ACTIVATION a, matrix d) {
       } else if (a == RELU) {
         if (x <= 0) d.data[i][j] = 0;
       } else if (a == LRELU) {
-        if (x <= 0) d.data[i][j] = 0.1;
+        if (x <= 0) d.data[i][j] *= 0.1;
       }
     }
   }
@@ -293,10 +293,10 @@ void train_model(model m, data d, int batch, int iters, double rate,
 // layer. Try using a the different activation functions we programmed.
 // How well do they perform? What's best?
 // for training loss
-// Relu: 0.95
-// Leaky Relu: 0.89
-// Logistic: 0.94
-// Relu works the best
+// Relu: 0.928
+// Leaky Relu: 0.926
+// Logistic: 0.985
+// Leaky Relu and Relu work the best similarly
 //
 // 5.2.3.2 Using the same activation, find the best (power of 10) learning
 // rate for your model. What is the training accuracy and testing
