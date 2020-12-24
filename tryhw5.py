@@ -5,14 +5,14 @@ def softmax_model(inputs, outputs):
     return make_model(l)
 
 def neural_net(inputs, outputs):
-    print inputs
+    print(inputs)
     l = [   make_layer(inputs, 32, LOGISTIC),
             make_layer(32, outputs, SOFTMAX)]
     return make_model(l)
 
 print("loading data...")
-train = load_classification_data("mnist.train", "mnist.labels", 1)
-test  = load_classification_data("mnist.test", "mnist.labels", 1)
+train = load_classification_data("mnist.train".encode('utf-8'), "mnist.labels".encode('utf-8'), 1)
+test  = load_classification_data("mnist.test".encode('utf-8'), "mnist.labels".encode('utf-8'), 1)
 print("done")
 print
 
