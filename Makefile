@@ -11,9 +11,34 @@ ALIB=libuwimg.a
 EXEC=uwimg
 OBJDIR=./obj/
 
-CC=gcc
-CPP=g++ -std=c++11 
-AR=ar
+#CC=gcc
+#CPP=g++ -std=c++11
+#AR=ar
+
+TOOLDIR = /usr/local/linaro-aarch64-2018.08-gcc8.2/bin/
+PATH := $(PATH):$(TOOLDIR)
+CFLAGS +=
+LDFLAGS +=
+export CROSS_COMPILE=aarch64-linux-gnu-
+
+
+export ROOTDIR
+export TOOLDIR
+export PATH
+export CFLAGS
+export LDFLAGS
+export CC := $(CROSS_COMPILE)gcc
+export AR := $(CROSS_COMPILE)ar
+export AS := $(CROSS_COMPILE)as
+export LD := $(CROSS_COMPILE)ld
+export NM := $(CROSS_COMPILE)nm
+export CPP:= $(CROSS_COMPILE)g++ -std=c++11
+export RANLIB := $(CROSS_COMPILE)ranlib
+export STRIP := $(CROSS_COMPILE)strip
+export SIZE := $(CROSS_COMPILE)size
+
+
+
 ARFLAGS=rcs
 OPTS=-Ofast
 LDFLAGS= -lm -pthread 
