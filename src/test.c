@@ -710,6 +710,20 @@ void test_hw3()
 void test_hw4()
 {
     printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
+    #if 0
+    data train = load_classification_data("mnist.train", "mnist.labels", 1);
+    data test = load_classification_data("mnist.test", "mnist.labels", 1);
+    model m;
+    layer l[2];
+    l[0] = make_layer(train.X.cols, 32, LOGISTIC);
+    l[1] = make_layer(32, train.y.cols, SOFTMAX);
+    m.n=2;
+    m.layers = l;
+    train_model(m,train,128,10,0.01,0.9,0);
+    printf("training accuracy: %f\n", accuracy_model(m, train));
+    printf("test accuracy:     %f\n", accuracy_model(m, test));
+    #endif
+    test_matrix();
 }
 void test_hw5()
 {
@@ -717,12 +731,11 @@ void test_hw5()
     test_gradient_matrix();
     test_layer();
     printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
-}
 
+}
 void run_tests()
 {
     test_structure();
     test_cornerness();
     printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }
-
