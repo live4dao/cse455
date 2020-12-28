@@ -7,6 +7,78 @@
 #include "test.h"
 #include "args.h"
 
+double Train_height[50][3]=
+{
+    {  0.000 , -46.097 , 2.162 },
+    {  0.000 , -46.097 , 2.162 },
+    {  0.000 , -33.520 , 1.657 },
+    {  0.000 , -47.481 , 2.211 },
+    {  0.000 , -46.130 , 2.163 },
+    {  0.000 , -32.636 , 1.618 },
+    {  0.000 , -20.773 , 2.128 },
+    {  0.000 , -16.472 , 1.701 },
+    {  0.000 , -10.018 , 1.566 },
+    {  0.000 , -7.636 , 1.993  },
+    {  0.000 , -9.389 , 1.305  },
+    {  0.000 , -8.089 , 1.266  },
+    {  0.000 , -8.089 , 1.970  },
+    {  0.000 , -6.895 , 1.561  },
+    {  0.000 , -6.895 , 2.521  },
+    {  0.000 , -10.287 , 1.250 },
+    {  0.000 , -15.667 , 2.700 },
+    {  0.000 , -7.710 , 0.939  },
+    {  0.000 , -14.843 , 1.537 },
+    {  0.000 , -15.508 , 1.604 },
+    {  0.000 , -23.720 , 1.207 },
+    {  0.000 , -33.248 , 2.193 },
+    {  0.000 , -48.533 , 2.248 },
+    {  0.000 , -32.273 , 1.602 },
+    {  0.000 , -26.074 , 1.319 },
+    {  0.000 , -14.494 , 1.502 },
+    {  0.000 , -26.783 , 1.352 },
+    {  0.000 , -21.688 , 1.478 },
+    {  0.000 , -9.990 , 1.735  },
+    {  0.000 , -6.584 , 1.605  },
+    {  0.000 , -7.466 , 1.689  },
+    {  0.000 , -7.466 , 2.599  },
+    {  0.000 , -8.037 , 1.678  },
+    {  0.000 , -8.026 , 1.257  },
+    {  0.000 , -5.442 , 2.466  },
+    {  0.000 , -18.263 , 1.567 },
+    {  0.000 , -14.308 , 2.471 },
+    {  0.000 , -14.931 , 1.288 },
+    {  0.000 , -11.135 , 1.738 },
+    {  0.000 , -23.448 , 1.194 },
+    {  0.000 , -21.515 , 1.834 },
+    {  0.000 , -20.518 , 1.402 },
+    {  0.000 , -15.137 , 1.567 },
+    {  0.000 , -9.894 , 1.546  },
+    {  0.000 , -9.894 , 1.718  },
+    {  0.000 , -9.894 , 1.718  },
+    {  0.000 , -9.894 , 1.203  },
+    {  0.000 , -9.894 , 1.203  },
+    {  0.000 , -9.894 , 1.203  },
+    {  0.000 , -16.085 , 1.385 }
+
+};
+
+double Test_height[11][3] = {
+
+    { 0.000 , -24.547 , 1.246  },
+    { 0.000 , -30.430 , 2.026  },
+    { 0.000 , -14.497 , 1.001  },
+    { 0.000 , -8.122 , 1.272   },
+    { 0.000 , -13.374 , 1.388  },
+    { 0.000 , -13.374 , 1.388  },
+    { 0.000 , -16.027 , 1.657  },
+    { 0.000 , -14.994 , 1.552  },
+    { 0.000 , -10.141 , 1.232  },
+    { 0.000 , -11.536 , 1.200  },
+    { 0.000 , -7.642 , 1.197   }
+
+};
+
+
 void feature_normalize2(image im)
 {
     int i;
@@ -707,6 +779,7 @@ void test_hw3()
     test_compute_homography();
     printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }
+
 void test_hw4()
 {
     printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
@@ -723,7 +796,23 @@ void test_hw4()
     printf("training accuracy: %f\n", accuracy_model(m, train));
     printf("test accuracy:     %f\n", accuracy_model(m, test));
     #endif
-    test_matrix();
+    //test_matrix();
+    //data train = load_installHeigh_data(Train_height, 1);
+    data train = load_installHeigh_data(Train_height,1,sizeof(Train_height)/(sizeof(double)*3));
+    //data test = load_installHeigh_data(Train_height,1);
+    model m;
+    layer l[2];
+    l[0] = make_layer(train.X.cols, 32, RELU);
+    l[1] = make_layer(32, train.y.cols, SOFTMAX);
+    m.n=2;
+    m.layers = l;
+    //train_model(m,train,128,100,0.01,0.9,0);
+    train_model(m,train,128,100,1,0.9,0);
+    printf("training accuracy: %f\n", accuracy_model(m, train));
+    data test = load_installHeigh_data(Test_height,1,sizeof(Test_height)/(sizeof(double)*3));
+    printf("test accuracy:     %f\n", accuracy_model(m, test));
+    //printf("training accuracy: %f\n", accuracy_model(m, train));
+
 }
 void test_hw5()
 {

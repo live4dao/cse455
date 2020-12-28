@@ -145,6 +145,11 @@ typedef struct {
 } model;
 
 data load_classification_data(char *images, char *label_file, int bias);
+data load_installHeigh_data(double height[][3], int bias , int rows);
+//data load_installHeigh_data(double height[][3], int bias);
+//data load_installHeigh_data(double set[50][3], int bias);
+//data load_installHeigh_data(int bias);
+//data load_installHeigh_data(double** height, int bias);
 void free_data(data d);
 data random_batch(data d, int n);
 char *fgetl(FILE *fp);
