@@ -255,8 +255,8 @@ void train_model(model m, data d, int batch, int iters, double rate,
   for (e = 0; e < iters; ++e) {
     data b = random_batch(d, batch);
     matrix p = forward_model(m, b.X);
-    //fprintf(stderr, "%06d: Loss: %f\n", e, cross_entropy_loss(b.y, p));
-    fprintf(stderr, "%06d: Loss: %f\n", e, rmse_loss(b.y, p));
+    fprintf(stderr, "%06d: Loss: %f\n", e, cross_entropy_loss(b.y, p));
+    //fprintf(stderr, "%06d: Loss: %f\n", e, rmse_loss(b.y, p));
 //    if(rmse_loss(b.y, p) < 0.2)
     //    break;
     matrix dL = axpy_matrix(-1, p, b.y);  // partial derivative of loss dL/dy
