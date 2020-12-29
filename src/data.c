@@ -74,7 +74,7 @@ data random_batch(data d, int n)
     int i;
     for(i = 0; i < n; ++i){
         int ind = rand()%d.X.rows;
-        X.data[i] = d.X.data[ind];
+        X.data[i] = d.X.data[ind];//brandon //here has problem
         y.data[i] = d.y.data[ind];
     }
     data c;
@@ -148,7 +148,7 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
     int i;
     int count = 0;
     matrix X;
-    matrix y = make_matrix(n, 30);
+    matrix y = make_matrix(n, 1);//make_matrix(n, 30);
     while(count < n){
 
         if (!cols) {
@@ -162,10 +162,11 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
         }
         if(bias) X.data[count][cols] = 1;
 
-        i = (int)(height[count][2]+0.5);
-        y.data[count][i] = 1;
+        //i = (int)(height[count][2]+0.5);
+        //y.data[count][i] = 1;
+        y.data[count][0] = height[count][2];
 
-        printf("count %d , x : %5.3f , y : %d\n",count,X.data[count][0],i);
+        printf("count %d , x : %5.3f , y : %f\n",count,X.data[count][0],y.data[count][0]);
 
         /* for (i = 0; i < k; ++i){ */
 

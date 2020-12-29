@@ -202,6 +202,8 @@ double accuracy_model(model m, data d) {
   for (i = 0; i < d.y.rows; ++i) {
     if (max_index(d.y.data[i], d.y.cols) == max_index(p.data[i], p.cols))
       ++correct;
+    printf("%f ",d.y.data[i][0]);
+    printf("%f \n",p.data[i][0]);
   }
   return (double)correct / d.y.rows;
 }
@@ -221,6 +223,24 @@ double cross_entropy_loss(matrix y, matrix p) {
   return sum / y.rows;
 }
 
+// Calculate the mse loss for a set of predictions
+// matrix y: the correct values
+// matrix p: the predictions
+// returns: average mean square loss over data points
+double rmse_loss(matrix y, matrix p) {
+  int i, j;
+  double sum = 0;
+  for (i = 0; i < y.rows; ++i) {
+    for (j = 0; j < y.cols; ++j) {
+      sum += pow((y.data[i][j] - p.data[i][j]) , 2);
+      //printf("%f - %f \n",y.data[i][j] , p.data[i][j]);
+    }
+  }
+  //return sqrt(sum) / y.rows;
+  return sum / y.rows;
+}
+
+
 // Train a model on a dataset using SGD
 // model m: model to train
 // data d: dataset to train on
@@ -235,7 +255,10 @@ void train_model(model m, data d, int batch, int iters, double rate,
   for (e = 0; e < iters; ++e) {
     data b = random_batch(d, batch);
     matrix p = forward_model(m, b.X);
-    fprintf(stderr, "%06d: Loss: %f\n", e, cross_entropy_loss(b.y, p));
+    //fprintf(stderr, "%06d: Loss: %f\n", e, cross_entropy_loss(b.y, p));
+    fprintf(stderr, "%06d: Loss: %f\n", e, rmse_loss(b.y, p));
+//    if(rmse_loss(b.y, p) < 0.2)
+    //    break;
     matrix dL = axpy_matrix(-1, p, b.y);  // partial derivative of loss dL/dy
     backward_model(m, dL);
     update_model(m, rate / batch, momentum, decay);
