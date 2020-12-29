@@ -148,7 +148,7 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
     int i;
     int count = 0;
     matrix X;
-    matrix y = make_matrix(n, 4);//make_matrix(n, 1);//make_matrix(n, 30);
+    matrix y = make_matrix(n, 1);//make_matrix(n, 1);//make_matrix(n, 30);
     while(count < n){
 
         if (!cols) {
@@ -157,7 +157,7 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
             X = make_matrix(n, cols + (bias != 0));//wx+b , b is bias
         }
         for (i = 0; i < cols; ++i){
-            //X.data[count][i] = im.data[i];
+            ////X.data[count][i] = im.data[i];
             if(i)
                 X.data[count][i] = height[count][1]/90.0;//tilt normalize
             else
@@ -165,7 +165,7 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
         }
         if(bias) X.data[count][cols] = 1;
 
-        #if 1
+        #if 0
         i = (int)(height[count][2]+0.5);
         y.data[count][i] = 1;
         printf("count %d , x : %5.3f , y : %5.3f %d\n",count,X.data[count][0],height[count][2],i);
