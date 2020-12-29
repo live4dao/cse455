@@ -148,17 +148,20 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
     int i;
     int count = 0;
     matrix X;
-    matrix y = make_matrix(n, 30);//make_matrix(n, 1);//make_matrix(n, 30);
+    matrix y = make_matrix(n, 4);//make_matrix(n, 1);//make_matrix(n, 30);
     while(count < n){
 
         if (!cols) {
             //cols = im.w*im.h*im.c;
-            cols = 1;
+            cols = 2;
             X = make_matrix(n, cols + (bias != 0));//wx+b , b is bias
         }
         for (i = 0; i < cols; ++i){
             //X.data[count][i] = im.data[i];
-            X.data[count][i] = height[count][1]/90.0;//tilt normalize
+            if(i)
+                X.data[count][i] = height[count][1]/90.0;//tilt normalize
+            else
+                X.data[count][i] = height[count][0]/360.0;//pan normalize
         }
         if(bias) X.data[count][cols] = 1;
 

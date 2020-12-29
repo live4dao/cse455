@@ -202,9 +202,12 @@ double accuracy_model(model m, data d) {
   for (i = 0; i < d.y.rows; ++i) {
     if (max_index(d.y.data[i], d.y.cols) == max_index(p.data[i], p.cols))
       ++correct;
-    printf("%f ",d.y.data[i][0]);
-    printf("%f \n",p.data[i][0]);
+    //printf("%f ",d.y.data[i][0]);
+    //printf("%f \n",p.data[i][0]);
+    printf("%d ",max_index(d.y.data[i], d.y.cols));
+    printf("%d \n",max_index(p.data[i], p.cols));
   }
+  printf("%d / %d \n",correct,d.y.rows);
   return (double)correct / d.y.rows;
 }
 
