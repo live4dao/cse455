@@ -202,13 +202,13 @@ double accuracy_model(model m, data d) {
   for (i = 0; i < d.y.rows; ++i) {
     if (max_index(d.y.data[i], d.y.cols) == max_index(p.data[i], p.cols))
       ++correct;
-    #if 0
+#if CLASSIFICATION
     printf("%d ",max_index(d.y.data[i], d.y.cols));
     printf("%d \n",max_index(p.data[i], p.cols));
-    #else
+#else
     printf("%f ",d.y.data[i][0]);
     printf("%f \n",p.data[i][0]);
-    #endif
+#endif
   }
   printf("%d / %d \n",correct,d.y.rows);
   return (double)correct / d.y.rows;
@@ -261,11 +261,11 @@ void train_model(model m, data d, int batch, int iters, double rate,
   for (e = 0; e < iters; ++e) {
     data b = random_batch(d, batch);
     matrix p = forward_model(m, b.X);
-    #if 0
+#if CLASSIFICATION
     fprintf(stderr, "%06d: Loss: %f\n", e, cross_entropy_loss(b.y, p));
-    #else
+#else
     fprintf(stderr, "%06d: Loss: %f\n", e, rmse_loss(b.y, p));
-    #endif
+#endif
 //    if(rmse_loss(b.y, p) < 0.2)
     //    break;
     matrix dL = axpy_matrix(-1, p, b.y);  // partial derivative of loss dL/dy

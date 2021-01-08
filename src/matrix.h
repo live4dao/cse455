@@ -1,5 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
+
+#define CLASSIFICATION 0
+
 typedef struct matrix{
     int rows, cols;
     double **data;

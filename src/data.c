@@ -148,7 +148,11 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
     int i;
     int count = 0;
     matrix X;
+#if CLASSIFICATION
+    matrix y = make_matrix(n, 4);//make_matrix(n, 1);//make_matrix(n, 30);
+#else
     matrix y = make_matrix(n, 1);//make_matrix(n, 1);//make_matrix(n, 30);
+#endif
     while(count < n){
 
         if (!cols) {
@@ -165,15 +169,15 @@ data load_installHeigh_data(double height[][3], int bias , int rows)
         }
         if(bias) X.data[count][cols] = 1;
 
-        #if 0
+#if CLASSIFICATION
         i = (int)(height[count][2]+0.5);
         y.data[count][i] = 1;
         printf("count %d , x : %5.3f , y : %5.3f %d\n",count,X.data[count][0],height[count][2],i);
-        #else
+#else
         y.data[count][0] = height[count][2];
 
         printf("count %d , x : %5.3f , y : %5.3f\n",count,X.data[count][0],y.data[count][0]);
-        #endif
+#endif
 
         /* for (i = 0; i < k; ++i){ */
 

@@ -890,29 +890,44 @@ void test_hw4()
     //data train = load_installHeigh_data(Train_height, 1);
     data train = load_installHeigh_data(Train_height,1,sizeof(Train_height)/(sizeof(double)*3));
     //data test = load_installHeigh_data(Train_height,1);
-    #if 0
+#if CLASSIFICATION
     model m;
+    /*
     layer l[4];
     l[0] = make_layer(train.X.cols, 32, RELU);
     l[1] = make_layer(32, 32, RELU);
     l[2] = make_layer(32, 32, RELU);
     l[3] = make_layer(32, train.y.cols, SOFTMAX);
     m.n=4;
-    m.layers = l;
-    #else
-    model m;
+    */
     layer l[3];
     l[0] = make_layer(train.X.cols, 32, RELU);
     l[1] = make_layer(32, 32, RELU);
-    l[2] = make_layer(32, train.y.cols, LINEAR);
+    l[2] = make_layer(32, train.y.cols, SOFTMAX);
     m.n=3;
     m.layers = l;
-    #endif
+
+    train_model(m,train,32,300,0.001,0.0,0);
+#else
+    model m;
+    layer l[3];
+    /*
+    l[0] = make_layer(train.X.cols, 8, RELU);
+    l[1] = make_layer(8, 8, RELU);
+    l[2] = make_layer(8, train.y.cols, LINEAR);
+    */
+    l[0] = make_layer(train.X.cols, 4, RELU);
+    l[1] = make_layer(4, 4, RELU);
+    l[2] = make_layer(4, train.y.cols, LINEAR);
+    m.n=3;
+    m.layers = l;
+    train_model(m,train,16,100,0.05,0.0,0);
+#endif
     //~train_model(m,train,128,100,0.01,0.9,0);
-    train_model(m,train,128,10,0.05,0.0,0);
     printf("training accuracy: %f\n", accuracy_model(m, train));
     data test = load_installHeigh_data(Test_height,1,sizeof(Test_height)/(sizeof(double)*3));
     printf("test accuracy:     %f\n", accuracy_model(m, test));
+
     //printf("training accuracy: %f\n", accuracy_model(m, train));
 
 }
